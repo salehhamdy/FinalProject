@@ -14,19 +14,19 @@ sealed class BottomBarScreen(
 ) {
     object MoviesScreen : BottomBarScreen(
         route = "MoviesScreen",
-        title = "MoviesScreen",
+        title = "Movies",
         icon = Icons.Default.Movie
     )
 
     object TvScreen : BottomBarScreen(
         route = "TvScreen",
-        title = "TvScreen",
+        title = "Tv",
         icon = Icons.Default.Tv
     )
 
     object SettingsScreen : BottomBarScreen(
         route = "CameraScreen",
-        title = "CameraScreen",
+        title = "Camera",
         icon = Icons.Default.Camera
     )
 }

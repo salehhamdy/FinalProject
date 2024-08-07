@@ -1,6 +1,7 @@
 package com.linkdev.finalproject.network_for_api_1
 
 import com.linkdev.finalproject.network_for_api_1.NetworkConstants.TIME_30
+import com.linkdev.finalproject.network_for_api_1.NetworkConstants.TIME_60
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Level.BODY

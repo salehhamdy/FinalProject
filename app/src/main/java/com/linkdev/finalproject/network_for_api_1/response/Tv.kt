@@ -13,8 +13,8 @@ data class Tv (
     @SerializedName("vote_average")
     val averageVote:Double?=null,
 
-    @SerializedName("original_name")
-    val name:String?=null,
+    @SerializedName("original_title")
+    val title: String? = null,
 
     @SerializedName("poster_path")
     val posterPath: String?=null,

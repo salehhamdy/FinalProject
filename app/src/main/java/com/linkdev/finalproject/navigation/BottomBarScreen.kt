@@ -2,8 +2,8 @@ package com.linkdev.finalproject.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Movie
-import androidx.compose.material.icons.filled.Tv
-import androidx.compose.material.icons.filled.Camera
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 
 
@@ -20,13 +20,13 @@ sealed class BottomBarScreen(
 
     object TvScreen : BottomBarScreen(
         route = "TvScreen",
-        title = "Tv",
-        icon = Icons.Default.Tv
+        title = "Person",
+        icon = Icons.Default.Person
     )
 
     object SettingsScreen : BottomBarScreen(
         route = "CameraScreen",
-        title = "Camera",
-        icon = Icons.Default.Camera
+        title = "Settings",
+        icon = Icons.Default.Settings
     )
 }

@@ -1,4 +1,4 @@
-package com.linkdev.finalproject.network_for_api_1.response
+package com.linkdev.finalproject.remote.network_for_api_1.response
 
 import com.google.gson.annotations.SerializedName
 

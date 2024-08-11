@@ -2,6 +2,7 @@ package com.linkdev.finalproject.di
 
 import com.linkdev.finalproject.remote.network_for_api_1.Api
 import com.linkdev.finalproject.remote.network_for_api_1.NetworkConstants
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
+object MoviesNetworkModule {
 
     @Provides
     @Singleton

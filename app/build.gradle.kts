@@ -85,15 +85,20 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
 
-    implementation ("com.google.dagger:hilt-android:2.48")
+    implementation ("com.google.dagger:hilt-android:2.50")
     implementation(libs.androidx.runtime.livedata)
-    kapt ("com.google.dagger:hilt-android-compiler:2.48")
+    kapt ("com.google.dagger:hilt-android-compiler:2.50")
     kapt("androidx.hilt:hilt-compiler:1.2.0")
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation("androidx.hilt:hilt-navigation-fragment:1.2.0")
     implementation("com.squareup:javapoet:1.13.0") // <-- added this
-    implementation("com.google.dagger:hilt-android-gradle-plugin:2.48")
+    implementation("com.google.dagger:hilt-android-gradle-plugin:2.50")
+    implementation ("androidx.camera:camera-camera2:1.1.0-alpha11")
+    implementation ("androidx.camera:camera-lifecycle:1.1.0-alpha11")
+    implementation ("androidx.camera:camera-view:1.0.0-alpha27")
+    implementation ("androidx.camera:camera-extensions:1.0.0-alpha27")
+    implementation ("io.coil-kt:coil-compose:2.2.2")
 
 
     testImplementation(libs.junit)

@@ -1,96 +1,121 @@
 package com.linkdev.finalproject.screens
 
-import android.Manifest
-import android.content.ContentValues
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
+import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
-import com.linkdev.finalproject.viewmodel.CameraViewModel
-import kotlinx.coroutines.launch
-
+import com.linkdev.finalproject.R
+import com.linkdev.finalproject.viewModel.CameraViewModel
 
 @Composable
-fun CameraScreen(
-    modifier: Modifier = Modifier,
-    viewModel: CameraViewModel = hiltViewModel()
-) {
+fun CameraScreen(viewModel: CameraViewModel = hiltViewModel()) {
+    val imageURIs by viewModel.imageURIs.observeAsState(listOf())
     val context = LocalContext.current
-    val imageUri by viewModel.imageUri.observeAsState()
 
-    // Create a launcher for the camera intent
-    val cameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicture(),
-        onResult = { success ->
-            if (!success) {
-                Toast.makeText(context, "Failed to take picture", Toast.LENGTH_SHORT).show()
+    val cameraLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { isCaptured ->
+            if (isCaptured) {
+                viewModel.tempUri.value?.let {
+                    viewModel.addImageUri(it)
+                }
             }
         }
-    )
 
-    // Create a launcher to request camera permission
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted: Boolean ->
+    val cameraPermissionLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (isGranted) {
-                // Generate a URI for the new image
-                val uri = context.contentResolver.insert(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    ContentValues()
-                )
-                if (uri != null) {
-                    viewModel.setImageUri(uri)
-                    cameraLauncher.launch(uri)
-                } else {
-                    Toast.makeText(context, "Failed to create image file", Toast.LENGTH_SHORT).show()
+                viewModel.createTempUri()
+                viewModel.tempUri.value?.let {
+                    cameraLauncher.launch(it)
                 }
             } else {
-                Toast.makeText(context, "Camera permission denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Permission is not granted", Toast.LENGTH_LONG).show()
             }
         }
-    )
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(8.dp)
     ) {
-        Button(onClick = {
-            requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-        }) {
-            Text("Open Camera")
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            IconButton(onClick = {
+                val isPermissionGranted = ContextCompat.checkSelfPermission(
+                    context,
+                    android.Manifest.permission.CAMERA
+                ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+
+                if (isPermissionGranted) {
+                    viewModel.createTempUri()
+                    viewModel.tempUri.value?.let {
+                        cameraLauncher.launch(it)
+                    }
+                } else {
+                    cameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+                }
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_camera_alt_24),
+                    contentDescription = "Camera Icon",
+                    tint = Color.Red
+                )
+            }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        LazyColumn {
+            itemsIndexed(imageURIs) { _, imageUri ->
+                AnimatedVisibility(visible = imageUri != Uri.EMPTY) {
+                    Image(bitmap = createBitmap(imageUri, context).asImageBitmap(), contentDescription = "Captured Image")
+                }
+            }
+        }
 
-        if (imageUri != null) {
-            Image(
-                painter = rememberImagePainter(data = imageUri),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(200.dp)
-                    .border(2.dp, Color.Black),
-                contentScale = ContentScale.Crop
+        if (imageURIs.isEmpty()) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = "No images yet",
+                fontSize = 16.sp
             )
-        } else {
-            Text(text = "No Image Selected")
         }
+    }
+}
+
+fun createBitmap(imageUri: Uri, context: Context): Bitmap {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        ImageDecoder.decodeBitmap(ImageDecoder.createSource(context.contentResolver, imageUri))
+    } else {
+        MediaStore.Images.Media.getBitmap(context.contentResolver, imageUri)
     }
 }

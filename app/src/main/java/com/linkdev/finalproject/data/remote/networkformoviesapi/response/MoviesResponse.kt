@@ -1,11 +1,14 @@
-package com.linkdev.finalproject.remote.network_for_api_1.response
+package com.linkdev.finalproject.data.remote.networkformoviesapi.response
 
 import com.google.gson.annotations.SerializedName
 
-data class Tv (
+data class MoviesResponse(
 
-    @SerializedName("id")
-    val id:Int ?=null,
+    @SerializedName("page")
+    val page:Int?=null,
+
+    @SerializedName("results")
+    val results: ArrayList<MoviesResponse>?=null,
 
     @SerializedName("adult")
     val isAdult:Boolean ?=null,
@@ -21,5 +24,4 @@ data class Tv (
 
     @SerializedName("overview")
     val overview: String?=null
-
 )

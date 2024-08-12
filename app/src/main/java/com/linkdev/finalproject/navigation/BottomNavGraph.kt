@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.linkdev.finalproject.screens.CameraScreen
 import com.linkdev.finalproject.screens.MoviesScreen
-import com.linkdev.finalproject.screens.TvScreen
+import com.linkdev.finalproject.screens.PersonScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
@@ -18,7 +18,7 @@ fun BottomNavGraph(navController: NavHostController) {
             MoviesScreen()
         }
         composable(route = BottomBarScreen.TvScreen.route) {
-            TvScreen()
+            PersonScreen()
         }
         composable(route = BottomBarScreen.SettingsScreen.route) {
             CameraScreen()

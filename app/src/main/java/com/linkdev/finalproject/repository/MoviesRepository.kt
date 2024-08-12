@@ -1,13 +1,13 @@
 package com.linkdev.finalproject.repository
 
-import com.linkdev.finalproject.remote.network_for_api_1.Api
-import com.linkdev.finalproject.remote.network_for_api_1.response.MoviesResponse
+import com.linkdev.finalproject.data.remote.networkformoviesapi.ApiMovies
+import com.linkdev.finalproject.data.remote.networkformoviesapi.response.MoviesResponse
 import javax.inject.Inject
 
-class MoviesRepository @Inject constructor(private val api: Api) {
+class MoviesRepository @Inject constructor(private val apiMovies: ApiMovies) {
 
     suspend fun getMoviesTrending(): MoviesResponse? {
-        val response = api.getMoviesTrending()
+        val response = apiMovies.getMoviesTrending()
         return if (response.isSuccessful) {
             response.body()
         } else {

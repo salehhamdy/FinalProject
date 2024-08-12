@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.linkdev.finalproject.remote.network_for_api_2.response.PersonResponse
+import com.linkdev.finalproject.data.remote.networkforpersonapi.response.PersonResponse
 import com.linkdev.finalproject.repository.PersonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

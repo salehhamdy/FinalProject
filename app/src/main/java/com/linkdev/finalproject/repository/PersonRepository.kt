@@ -1,9 +1,8 @@
 package com.linkdev.finalproject.repository
 
-import com.linkdev.finalproject.remote.network_for_api_2.ApiPerson
-import com.linkdev.finalproject.remote.network_for_api_2.response.PersonResponse
+import com.linkdev.finalproject.data.remote.networkforpersonapi.ApiPerson
+import com.linkdev.finalproject.data.remote.networkforpersonapi.response.PersonResponse
 import javax.inject.Inject
-
 
 class PersonRepository @Inject constructor(private val apiPerson: ApiPerson) {
 

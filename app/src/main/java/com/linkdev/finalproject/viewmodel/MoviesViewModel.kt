@@ -1,7 +1,7 @@
 package com.linkdev.finalproject.viewmodel
 
 import androidx.lifecycle.*
-import com.linkdev.finalproject.remote.network_for_api_1.response.MoviesResponse
+import com.linkdev.finalproject.data.remote.networkformoviesapi.response.MoviesResponse
 import com.linkdev.finalproject.repository.MoviesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

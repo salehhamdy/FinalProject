@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.hilt)
     id("org.jetbrains.kotlin.plugin.serialization") version ("1.9.23")
     id("org.jetbrains.kotlin.kapt")
-
-
 }
 
 android {
@@ -84,9 +82,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0")
-
     implementation ("com.google.dagger:hilt-android:2.50")
     implementation(libs.androidx.runtime.livedata)
+    implementation(libs.androidx.room.common)
     kapt ("com.google.dagger:hilt-android-compiler:2.50")
     kapt("androidx.hilt:hilt-compiler:1.2.0")
     kapt("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0")

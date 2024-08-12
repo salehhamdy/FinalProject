@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.linkdev.finalproject.fullImageURL
-import com.linkdev.finalproject.remote.network_for_api_1.response.Tv
+import com.linkdev.finalproject.data.remote.networkformoviesapi.response.MoviesResponse
 import com.linkdev.finalproject.viewmodel.MoviesViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
@@ -36,7 +36,8 @@ fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hil
 
     val context = LocalContext.current
 
-    if (moviesState == null) {
+
+    if (moviesState?.results.isNullOrEmpty()) {
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -45,8 +46,10 @@ fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hil
         }
     } else {
         LazyColumn(modifier = modifier) {
-            items(moviesState?.results ?: emptyList()) { movie ->
-                MovieItem(movie = movie, context = context)
+            items(moviesState?.results ?: arrayListOf()) { movie ->
+                movie?.let {
+                    MovieItem(movie = it, context = context)
+                }
             }
         }
     }
@@ -54,7 +57,7 @@ fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hil
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MovieItem(movie: Tv, context: android.content.Context) {
+fun MovieItem(movie: MoviesResponse, context: android.content.Context) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -71,7 +74,7 @@ fun MovieItem(movie: Tv, context: android.content.Context) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp),
-            model = movie.posterPath.fullImageURL(),
+            model = movie.posterPath?.fullImageURL(),
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )

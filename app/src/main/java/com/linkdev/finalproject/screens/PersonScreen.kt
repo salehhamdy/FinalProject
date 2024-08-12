@@ -27,12 +27,12 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.finalproject.viewmodel.PersonViewModel
 import com.linkdev.finalproject.fullImageURL
-import com.linkdev.finalproject.remote.network_for_api_2.response.PersonResponse
+import com.linkdev.finalproject.data.remote.networkforpersonapi.response.PersonResponse
 
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun TvScreen(modifier: Modifier = Modifier, viewModel: PersonViewModel = hiltViewModel()) {
+fun PersonScreen(modifier: Modifier = Modifier, viewModel: PersonViewModel = hiltViewModel()) {
     val personState by viewModel.personState.observeAsState()
 
     val context = LocalContext.current

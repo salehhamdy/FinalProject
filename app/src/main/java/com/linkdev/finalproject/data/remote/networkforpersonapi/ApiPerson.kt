@@ -1,6 +1,6 @@
-package com.linkdev.finalproject.remote.network_for_api_2
+package com.linkdev.finalproject.data.remote.networkforpersonapi
 
-import com.linkdev.finalproject.remote.network_for_api_2.response.PersonResponse
+import com.linkdev.finalproject.data.remote.networkforpersonapi.response.PersonResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 //'https://api.themoviedb.org/3/trending/person/day?language=en-US' \
 interface ApiPerson{
-    @GET(NetworkConstantsPerson.Person_Trending)
+    @GET(PersonNetworkConstants.Person_Trending)
 
     suspend fun getPersonTrending(
         @Query("language") language:String="en-US",//default value

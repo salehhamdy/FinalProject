@@ -1,4 +1,4 @@
-package com.linkdev.finalproject.viewModel
+package com.linkdev.finalproject.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.LiveData

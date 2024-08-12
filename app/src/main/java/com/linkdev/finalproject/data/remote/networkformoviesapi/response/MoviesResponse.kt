@@ -23,5 +23,9 @@ data class MoviesResponse(
     val posterPath: String?=null,
 
     @SerializedName("overview")
-    val overview: String?=null
+    val overview: String?=null,
+
+    @SerializedName("id")
+    val id: Int?=null
+
 )

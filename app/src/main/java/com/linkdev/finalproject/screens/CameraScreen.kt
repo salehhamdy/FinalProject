@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.linkdev.finalproject.R
-import com.linkdev.finalproject.viewModel.CameraViewModel
+import com.linkdev.finalproject.viewmodel.CameraViewModel
 
 @Composable
 fun CameraScreen(viewModel: CameraViewModel = hiltViewModel()) {

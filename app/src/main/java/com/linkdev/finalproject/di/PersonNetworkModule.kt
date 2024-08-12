@@ -1,7 +1,6 @@
-package com.example.finalproject.di
+package com.linkdev.finalproject.di
 
 import com.linkdev.finalproject.data.remote.networkforpersonapi.ApiPerson
-import com.linkdev.finalproject.repository.PersonRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,10 +18,5 @@ object PersonNetworkModule {
         return retrofit.create(ApiPerson::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun providePersonRepository(apiPerson: ApiPerson): PersonRepository {
-        return PersonRepository(apiPerson)
-    }
 }
 

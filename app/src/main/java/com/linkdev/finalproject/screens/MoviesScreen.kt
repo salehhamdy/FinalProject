@@ -1,6 +1,5 @@
 package com.linkdev.finalproject.screens
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,7 +30,7 @@ import com.linkdev.finalproject.viewmodel.MoviesViewModel
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hiltViewModel()) {
+fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hiltViewModel() , movieclick: (Int) -> Unit = {}) {
     val moviesState by viewModel.moviesState.observeAsState()
 
     val context = LocalContext.current
@@ -48,7 +47,7 @@ fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hil
         LazyColumn(modifier = modifier) {
             items(moviesState?.results ?: arrayListOf()) { movie ->
                 movie?.let {
-                    MovieItem(movie = it, context = context)
+                    MovieItem(movie = it, context = context , movieclick = movieclick)
                 }
             }
         }
@@ -57,7 +56,7 @@ fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hil
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MovieItem(movie: MoviesResponse, context: android.content.Context) {
+fun MovieItem(movie: MoviesResponse, context: android.content.Context , movieclick: (Int) -> Unit = {})  {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,9 +65,7 @@ fun MovieItem(movie: MoviesResponse, context: android.content.Context) {
             .clip(RoundedCornerShape(8.dp))
             .border(BorderStroke(1.dp, color = Color.Black), RoundedCornerShape(8.dp))
             .padding(bottom = 8.dp)
-            .clickable {
-                Toast.makeText(context, movie.title, Toast.LENGTH_LONG).show()
-            }
+            .clickable {  movieclick (movie.id ?: 0) }
     ) {
         GlideImage(
             modifier = Modifier

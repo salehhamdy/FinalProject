@@ -1,12 +1,18 @@
 package com.linkdev.finalproject.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.linkdev.finalproject.screens.CameraScreen
-import com.linkdev.finalproject.screens.MoviesScreen
-import com.linkdev.finalproject.screens.TvScreen
+import androidx.navigation.navArgument
+import com.linkdev.finalproject.screens.camerascreen.CameraScreen
+import com.linkdev.finalproject.screens.moviedetailsscreen.MovieDetailsScreen
+import com.linkdev.finalproject.screens.moviesscreen.MoviesScreen
+import com.linkdev.finalproject.screens.personscreen.PersonScreen
+import com.linkdev.finalproject.screens.moviedetailsscreen.MovieDetailsViewModel
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
@@ -15,13 +21,21 @@ fun BottomNavGraph(navController: NavHostController) {
         startDestination = BottomBarScreen.MoviesScreen.route
     ) {
         composable(route = BottomBarScreen.MoviesScreen.route) {
-            MoviesScreen()
+            MoviesScreen(movieclick = { movieId -> navController.navigate("movie_details/$movieId") })
         }
         composable(route = BottomBarScreen.TvScreen.route) {
-            TvScreen()
+            PersonScreen()
         }
         composable(route = BottomBarScreen.SettingsScreen.route) {
             CameraScreen()
+        }
+        composable(route = Routes.DETAIL , arguments = listOf(navArgument("movieId") { type = NavType.IntType } )) {
+            val id = it.arguments?.getInt("movieId")
+            Log.d("movieid", "BottomNavGraph:$id ")
+            val viewModel = hiltViewModel<MovieDetailsViewModel>()
+            viewModel.fetchMovieDetails(id ?: 0)
+            val state = viewModel.moviesState.value
+            MovieDetailsScreen(moviedetails = state)
         }
     }
 }

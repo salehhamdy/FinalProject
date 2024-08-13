@@ -1,4 +1,4 @@
-package com.linkdev.finalproject.repository
+package com.linkdev.finalproject.screens.moviesscreen
 
 import com.linkdev.finalproject.data.remote.networkformoviesapi.ApiMovies
 import com.linkdev.finalproject.data.remote.networkformoviesapi.response.MoviesResponse

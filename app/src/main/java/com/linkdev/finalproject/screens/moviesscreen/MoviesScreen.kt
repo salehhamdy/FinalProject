@@ -1,6 +1,5 @@
-package com.linkdev.finalproject.screens
+package com.linkdev.finalproject.screens.moviesscreen
 
-import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,19 +24,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.finalproject.viewmodel.PersonViewModel
 import com.linkdev.finalproject.fullImageURL
-import com.linkdev.finalproject.data.remote.networkforpersonapi.response.PersonResponse
-
+import com.linkdev.finalproject.data.remote.networkformoviesapi.response.MoviesResponse
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PersonScreen(modifier: Modifier = Modifier, viewModel: PersonViewModel = hiltViewModel()) {
-    val personState by viewModel.personState.observeAsState()
+fun MoviesScreen(modifier: Modifier = Modifier, viewModel: MoviesViewModel = hiltViewModel(), movieclick: (Int) -> Unit = {}) {
+    val moviesState by viewModel.moviesState.observeAsState()
 
     val context = LocalContext.current
 
-    if (personState == null) {
+
+    if (moviesState?.results.isNullOrEmpty()) {
         Box(
             modifier = modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
@@ -46,8 +44,10 @@ fun PersonScreen(modifier: Modifier = Modifier, viewModel: PersonViewModel = hil
         }
     } else {
         LazyColumn(modifier = modifier) {
-            items(personState?.results ?: emptyList()) { person ->
-                PersonItem(person = person, context = context)
+            items(moviesState?.results ?: arrayListOf()) { movie ->
+                movie?.let {
+                    MovieItem(movie = it, context = context , movieclick = movieclick)
+                }
             }
         }
     }
@@ -55,7 +55,7 @@ fun PersonScreen(modifier: Modifier = Modifier, viewModel: PersonViewModel = hil
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun PersonItem(person: PersonResponse, context: android.content.Context) {
+fun MovieItem(movie: MoviesResponse, context: android.content.Context , movieclick: (Int) -> Unit = {})  {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,15 +64,13 @@ fun PersonItem(person: PersonResponse, context: android.content.Context) {
             .clip(RoundedCornerShape(8.dp))
             .border(BorderStroke(1.dp, color = Color.Black), RoundedCornerShape(8.dp))
             .padding(bottom = 8.dp)
-            .clickable {
-                Toast.makeText(context, person.name, Toast.LENGTH_LONG).show()
-            }
+            .clickable {  movieclick (movie.id ?: 0) }
     ) {
         GlideImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(250.dp),
-            model = person.profilePath.fullImageURL(),
+            model = movie.posterPath?.fullImageURL(),
             contentDescription = null,
             contentScale = ContentScale.FillBounds
         )
@@ -82,7 +80,7 @@ fun PersonItem(person: PersonResponse, context: android.content.Context) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
                 .padding(vertical = 8.dp),
-            text = person.name ?: "PERSON NAME",
+            text = movie.title ?: "MOVIE TITLE",
             fontWeight = FontWeight.ExtraBold,
             fontStyle = FontStyle.Italic,
             color = Color.Black,
@@ -94,7 +92,7 @@ fun PersonItem(person: PersonResponse, context: android.content.Context) {
                 .align(Alignment.CenterHorizontally)
                 .fillMaxWidth()
                 .padding(8.dp),
-            text = person.department ?: "Department",
+            text = movie.overview ?: "overview",
             fontWeight = FontWeight.Medium,
             fontStyle = FontStyle.Normal,
             color = Color.Black,

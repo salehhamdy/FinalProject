@@ -1,7 +1,6 @@
 package com.linkdev.finalproject.di
 
 import com.linkdev.finalproject.data.remote.networkformoviesapi.ApiMovies
-import com.linkdev.finalproject.repository.MoviesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

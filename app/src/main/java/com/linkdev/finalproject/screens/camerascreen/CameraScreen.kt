@@ -1,4 +1,4 @@
-package com.linkdev.finalproject.screens
+package com.linkdev.finalproject.screens.camerascreen
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -13,6 +13,9 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.linkdev.finalproject.R
-import com.linkdev.finalproject.viewmodel.CameraViewModel
+
 
 @Composable
 fun CameraScreen(viewModel: CameraViewModel = hiltViewModel()) {
@@ -94,12 +97,33 @@ fun CameraScreen(viewModel: CameraViewModel = hiltViewModel()) {
         }
 
         LazyColumn {
+            println( "hello ${imageURIs}")
             itemsIndexed(imageURIs) { _, imageUri ->
                 AnimatedVisibility(visible = imageUri != Uri.EMPTY) {
                     Image(bitmap = createBitmap(imageUri, context).asImageBitmap(), contentDescription = "Captured Image")
                 }
             }
         }
+
+//        LazyVerticalGrid(
+//            columns = GridCells.Adaptive(minSize = 100.dp), // Adjust the minSize as needed
+//            contentPadding = PaddingValues(2.dp),
+//            modifier = Modifier.weight(1f)
+//        ) {
+//            items(imageURIs) { imageUri ->
+//                AnimatedVisibility(visible = imageUri != Uri.EMPTY) {
+//                    Image(
+//                        bitmap = createBitmap(imageUri, context).asImageBitmap(),
+//                        contentDescription = "Captured Image",
+//                        modifier = Modifier
+//                            .padding(1.dp)
+//                            .aspectRatio(1f) // Maintain square aspect ratio
+//                            .fillMaxWidth()
+//                    )
+//                }
+//            }
+//        }
+
 
         if (imageURIs.isEmpty()) {
             Text(

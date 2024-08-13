@@ -1,10 +1,9 @@
-package com.linkdev.finalproject.viewmodel
+package com.linkdev.finalproject.screens.camerascreen
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.linkdev.finalproject.repository.CameraRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

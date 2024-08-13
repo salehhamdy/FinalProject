@@ -1,4 +1,4 @@
-package com.linkdev.finalproject.repository
+package com.linkdev.finalproject.screens.personscreen
 
 import com.linkdev.finalproject.data.remote.networkforpersonapi.ApiPerson
 import com.linkdev.finalproject.data.remote.networkforpersonapi.response.PersonResponse

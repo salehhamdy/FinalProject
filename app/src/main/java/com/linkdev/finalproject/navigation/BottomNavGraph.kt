@@ -8,11 +8,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.linkdev.finalproject.screens.CameraScreen
-import com.linkdev.finalproject.screens.MovieDetailsScreen
-import com.linkdev.finalproject.screens.MoviesScreen
-import com.linkdev.finalproject.screens.PersonScreen
-import com.linkdev.finalproject.viewmodel.MovieDetailsViewModel
+import com.linkdev.finalproject.screens.camerascreen.CameraScreen
+import com.linkdev.finalproject.screens.moviedetailsscreen.MovieDetailsScreen
+import com.linkdev.finalproject.screens.moviesscreen.MoviesScreen
+import com.linkdev.finalproject.screens.personscreen.PersonScreen
+import com.linkdev.finalproject.screens.moviedetailsscreen.MovieDetailsViewModel
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
